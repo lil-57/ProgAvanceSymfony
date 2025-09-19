@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Oignons{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Liste des Oignons</h1>
+    
+    <a href="{{ path('oignon_create') }}" class="btn btn-primary mb-3">Créer un nouvel oignon</a>
+    
+    {% if oignons is empty %}
+        <p>Aucun oignon trouvé.</p>
+    {% else %}
+        <div class="row">
+            {% for oignon in oignons %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ oignon.name }}</h5>
+                            <p class="card-text">
+                                <strong>ID:</strong> {{ oignon.id }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

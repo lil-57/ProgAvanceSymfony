@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Sauces{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Liste des Sauces</h1>
+    
+    <a href="{{ path('sauce_create') }}" class="btn btn-primary mb-3">Créer une nouvelle sauce</a>
+    
+    {% if sauces is empty %}
+        <p>Aucune sauce trouvée.</p>
+    {% else %}
+        <div class="row">
+            {% for sauce in sauces %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ sauce.name }}</h5>
+                            <p class="card-text">
+                                <strong>ID:</strong> {{ sauce.id }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

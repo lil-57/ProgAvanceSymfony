@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Pains{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Liste des Pains</h1>
+    
+    <a href="{{ path('pain_create') }}" class="btn btn-primary mb-3">Créer un nouveau pain</a>
+    
+    {% if pains is empty %}
+        <p>Aucun pain trouvé.</p>
+    {% else %}
+        <div class="row">
+            {% for pain in pains %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ pain.name }}</h5>
+                            <p class="card-text">
+                                <strong>ID:</strong> {{ pain.id }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

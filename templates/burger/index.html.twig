@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Burgers{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Liste des Burgers</h1>
+    
+    <a href="{{ path('burger_create') }}" class="btn btn-primary mb-3">Créer un nouveau burger</a>
+    
+    {% if burgers is empty %}
+        <p>Aucun burger trouvé.</p>
+    {% else %}
+        <div class="row">
+            {% for burger in burgers %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ burger.name }}</h5>
+                            <p class="card-text">
+                                <strong>Prix:</strong> {{ burger.price }}€<br>
+                                {% if burger.pain %}
+                                    <strong>Pain:</strong> {{ burger.pain.name }}<br>
+                                {% endif %}
+                                {% if burger.image %}
+                                    <strong>Image:</strong> {{ burger.image.name }}<br>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

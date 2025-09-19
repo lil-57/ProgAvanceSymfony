@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Burger;
 use App\Entity\Pain;
 use App\Entity\Image;
+use App\Repository\BurgerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,15 +13,24 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BurgerController extends AbstractController
 {
+    #[Route('/burgers', name: 'burger_index')]
+    public function index(BurgerRepository $burgerRepository): Response
+    {
+        $burgers = $burgerRepository->findAll();
+        
+        return $this->render('burger/index.html.twig', [
+            'burgers' => $burgers,
+        ]);
+    }
+
     #[Route('/burger/create', name: 'burger_create')]
     public function create(EntityManagerInterface $entityManager): Response
     {
-    
         $burger = new Burger();
-        $burger->setName('Burger Classic');
-        $burger->setPrice('12.99');
+        $burger->setName('Krabby Patty');
+        $burger->setPrice('4.99');
         
-
+      
         $pain = $entityManager->getRepository(Pain::class)->findOneBy([]) ?? new Pain();
         if (!$pain->getId()) {
             $pain->setName('Pain brioché');
@@ -28,6 +38,7 @@ class BurgerController extends AbstractController
         }
         $burger->setPain($pain);
 
+        // Persister et sauvegarder le nouveau burger
         $entityManager->persist($burger);
         $entityManager->flush();
 
@@ -45,12 +56,6 @@ class BurgerController extends AbstractController
         }
 
         return new Response($output);
-    }
-
-    #[Route('/burgers', name: 'burger_list')]
-    public function list(): Response
-    {
-        return $this->render('burgers_list.html.twig');
     }
 
     #[Route('/burgers/{id}', name: 'burger_show')]
