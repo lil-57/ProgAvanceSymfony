@@ -1,36 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des Burgers{% endblock %}
+{% block title %}🍔 Nos Burgers{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Liste des Burgers</h1>
-    
-    <a href="{{ path('burger_create') }}" class="btn btn-primary mb-3">Créer un nouveau burger</a>
-    
-    {% if burgers is empty %}
-        <p>Aucun burger trouvé.</p>
-    {% else %}
-        <div class="row">
-            {% for burger in burgers %}
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
+<div class="text-center mb-4">
+    <h1>🍔 Nos Burgers</h1>
+    <a href="{{ path('home') }}" class="btn btn-secondary">← Retour à l'accueil</a>
+</div>
+
+{% if burgers is empty %}
+    <div class="text-center">
+        <p>Aucun burger disponible pour le moment.</p>
+    </div>
+{% else %}
+    <div class="row">
+        {% for burger in burgers %}
+            <div class="col-md-4 mb-4">
+                <a href="{{ path('burger_show', {id: burger.id}) }}" class="text-decoration-none">
+                    <div class="card pollos-animation">
+                        <div class="card-body text-center">
                             <h5 class="card-title">{{ burger.name }}</h5>
                             <p class="card-text">
-                                <strong>Prix:</strong> {{ burger.price }}€<br>
-                                {% if burger.pain %}
-                                    <strong>Pain:</strong> {{ burger.pain.name }}<br>
-                                {% endif %}
-                                {% if burger.image %}
-                                    <strong>Image:</strong> {{ burger.image.name }}<br>
-                                {% endif %}
+                                <span class="pollos-badge">{{ burger.price }}€</span>
                             </p>
+                            {% if burger.pain %}
+                                <p><small>Pain: {{ burger.pain.name }}</small></p>
+                            {% endif %}
+                            <div class="mt-3">
+                                <span class="btn btn-primary btn-sm">Voir détails →</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-</div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
 {% endblock %}

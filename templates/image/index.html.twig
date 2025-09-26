@@ -1,30 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des Images{% endblock %}
+{% block title %}📸 Nos Images{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Liste des Images</h1>
-    
-    <a href="{{ path('image_create') }}" class="btn btn-primary mb-3">Créer une nouvelle image</a>
-    
-    {% if images is empty %}
-        <p>Aucune image trouvée.</p>
-    {% else %}
-        <div class="row">
-            {% for image in images %}
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ image.name }}</h5>
-                            <p class="card-text">
-                                <strong>ID:</strong> {{ image.id }}
-                            </p>
-                        </div>
+<div class="text-center mb-4">
+    <h1>📸 Nos Images</h1>
+    <a href="{{ path('home') }}" class="btn btn-secondary">← Retour à l'accueil</a>
+</div>
+
+{% if images is empty %}
+    <div class="text-center">
+        <p>Aucune image disponible pour le moment.</p>
+    </div>
+{% else %}
+    <div class="row">
+        {% for image in images %}
+            <div class="col-md-4 mb-4">
+                <div class="card pollos-animation">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ image.name }}</h5>
                     </div>
                 </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-</div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
 {% endblock %}

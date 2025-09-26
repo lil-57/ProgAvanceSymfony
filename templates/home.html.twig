@@ -1,9 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil - CRUDcroustillant{% endblock %}
+{% block title %}Accueil - Los Pollos Burgers{% endblock %}
 
 {% block content %}
-    <h2>Bienvenue sur CRUDcroustillant !</h2>
-    <p>Découvrez nos délicieux burgers.</p>
-    <img src="{{ asset('burger.jpg') }}" alt="Burger délicieux" width="300">
+<div class="text-center py-5">
+    <div class="pollos-highlight">
+        <h1>🐔 Bienvenue chez Los Pollos Burgers 🍔</h1>
+    </div>
+
+    <div class="text-center mt-5">
+        <img src="{{ asset('burger-image.jpg') }}" alt="Burger Los Pollos" class="img-fluid rounded shadow pollos-animation mb-4" style="max-width:400px; border: 4px solid #FFD700;">
+        
+        <div class="mt-4">
+            <span class="pollos-badge">🏆 Qualité Premium 🏆</span>
+        </div>
+        
+        <div class="row mt-5">
+            <div class="col-md-4 mb-3">
+                <a href="{{ path('burger_index') }}" class="btn btn-primary btn-lg pollos-animation w-100">🍔 Nos Burgers</a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ path('sauce_index') }}" class="btn btn-secondary btn-lg pollos-animation w-100">🌶️ Nos Sauces</a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ path('pain_index') }}" class="btn btn-primary btn-lg pollos-animation w-100">🍞 Nos Pains</a>
+            </div>
+        </div>
+        
+        <div class="row mt-3">
+            <div class="col-md-6 mb-3">
+                <a href="{{ path('oignon_index') }}" class="btn btn-secondary btn-lg pollos-animation w-100">🧅 Nos Oignons</a>
+            </div>
+            <div class="col-md-6 mb-3">
+                <a href="{{ path('commentaire_index') }}" class="btn btn-primary btn-lg pollos-animation w-100">💬 Avis Clients</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

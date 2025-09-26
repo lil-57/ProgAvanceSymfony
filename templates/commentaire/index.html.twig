@@ -1,33 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des Commentaires{% endblock %}
+{% block title %}💬 Avis Clients{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Liste des Commentaires</h1>
-    
-    <a href="{{ path('commentaire_create') }}" class="btn btn-primary mb-3">Créer un nouveau commentaire</a>
-    
-    {% if commentaires is empty %}
-        <p>Aucun commentaire trouvé.</p>
-    {% else %}
-        <div class="row">
-            {% for commentaire in commentaires %}
-                <div class="col-md-6 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Commentaire #{{ commentaire.id }}</h5>
-                            <p class="card-text">
-                                {{ commentaire.name }}
-                                {% if commentaire.burger %}
-                                    <br><strong>Burger:</strong> {{ commentaire.burger.name }}
-                                {% endif %}
-                            </p>
-                        </div>
+<div class="text-center mb-4">
+    <h1>💬 Avis Clients</h1>
+    <a href="{{ path('home') }}" class="btn btn-secondary">← Retour à l'accueil</a>
+</div>
+
+{% if commentaires is empty %}
+    <div class="text-center">
+        <p>Aucun avis disponible pour le moment.</p>
+    </div>
+{% else %}
+    <div class="row">
+        {% for commentaire in commentaires %}
+            <div class="col-md-6 mb-4">
+                <div class="card pollos-animation">
+                    <div class="card-body">
+                        <p class="card-text">"{{ commentaire.name }}"</p>
+                        {% if commentaire.burger %}
+                            <small class="text-muted">À propos de: {{ commentaire.burger.name }}</small>
+                        {% endif %}
                     </div>
                 </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-</div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
 {% endblock %}

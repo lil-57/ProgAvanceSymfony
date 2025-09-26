@@ -1,3 +1,262 @@
+/* ==========================================
+   POLLOS HERMANOS THEME - INSPIRED STYLING
+   ========================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Open+Sans:wght@400;600;700&display=swap');
+
+:root {
+    --pollos-yellow: #FFD700;
+    --pollos-orange: #FF8C00;
+    --pollos-red: #DC143C;
+    --pollos-dark-red: #B22234;
+    --pollos-brown: #8B4513;
+    --pollos-cream: #FFF8DC;
+    --pollos-dark: #2C1810;
+    --pollos-light: #FFFACD;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    background-color: skyblue;
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(135deg, var(--pollos-yellow) 0%, var(--pollos-orange) 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    color: var(--pollos-dark);
+}
+
+/* HEADER STYLING */
+header {
+    background: linear-gradient(90deg, var(--pollos-red) 0%, var(--pollos-dark-red) 100%);
+    color: var(--pollos-cream);
+    padding: 1.5rem 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    border-bottom: 4px solid var(--pollos-yellow);
+}
+
+header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.5rem;
+    text-align: center;
+    margin: 0;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+    letter-spacing: 2px;
+}
+
+header nav {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    gap: 2rem;
+}
+
+header nav a {
+    color: var(--pollos-cream);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid transparent;
+}
+
+header nav a:hover {
+    background: var(--pollos-yellow);
+    color: var(--pollos-dark);
+    border-color: var(--pollos-yellow);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* MAIN CONTENT */
+.container {
+    background: rgba(255,255,255,0.95);
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem auto;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    border: 3px solid var(--pollos-yellow);
+}
+
+h1, h2, h3 {
+    font-family: 'Fredoka One', cursive;
+    color: var(--pollos-red);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+h2 {
+    font-size: 2rem;
+    border-bottom: 3px solid var(--pollos-yellow);
+    padding-bottom: 0.5rem;
+}
+
+/* BUTTONS */
+.btn {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    border-radius: 25px;
+    padding: 0.8rem 2rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--pollos-red), var(--pollos-dark-red));
+    color: white;
+    border: 2px solid var(--pollos-red);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, var(--pollos-dark-red), var(--pollos-red));
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(220, 20, 60, 0.4);
+}
+
+.btn-secondary {
+    background: linear-gradient(45deg, var(--pollos-yellow), var(--pollos-orange));
+    color: var(--pollos-dark);
+    border: 2px solid var(--pollos-orange);
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(45deg, var(--pollos-orange), var(--pollos-yellow));
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(255, 140, 0, 0.4);
+}
+
+/* CARDS */
+.card {
+    border: 3px solid var(--pollos-yellow);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    background: var(--pollos-cream);
+    height: 100%;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    border-color: var(--pollos-orange);
+}
+
+/* Liens sur les cartes */
+a.text-decoration-none:hover .card {
+    border-color: var(--pollos-red);
+    background: linear-gradient(135deg, var(--pollos-cream) 0%, rgba(255,215,0,0.3) 100%);
+}
+
+a.text-decoration-none .card-title {
+    color: var(--pollos-red);
+}
+
+a.text-decoration-none:hover .card-title {
+    color: var(--pollos-dark-red);
+}
+
+.card-body {
+    padding: 1.5rem;
+    background: linear-gradient(135deg, var(--pollos-cream) 0%, rgba(255,215,0,0.1) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.card-title {
+    font-family: 'Fredoka One', cursive;
+    color: var(--pollos-red);
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.card-text {
+    color: var(--pollos-brown);
+    font-weight: 500;
+    line-height: 1.6;
+    text-align: center;
+}
+
+/* Page-specific styling */
+.page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,140,0,0.2));
+    border-radius: 15px;
+    border: 2px solid var(--pollos-yellow);
+}
+
+.page-header h1 {
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    background: rgba(255,255,255,0.8);
+    border-radius: 15px;
+    border: 2px dashed var(--pollos-orange);
+    color: var(--pollos-brown);
+    font-size: 1.2rem;
+}
+
+/* FOOTER */
+footer {
+    background: var(--pollos-dark);
+    color: var(--pollos-cream);
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 4px solid var(--pollos-yellow);
+}
+
+footer p {
+    margin: 0;
+    font-weight: 600;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    header nav ul {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .container {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
 }

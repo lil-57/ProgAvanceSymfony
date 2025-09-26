@@ -1,14 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détail Burger - CRUDcroustillant{% endblock %}
+{% block title %}{{ burger.name }} - CRUDcroustillant{% endblock %}
 
 {% block content %}
-    {% if burger %}
-        <h2>{{ burger.nom }}</h2>
-        <p>{{ burger.description }}</p>
-        <p><small>ID du burger : {{ id }}</small></p>
-    {% else %}
-        <h2>Burger non trouvé</h2>
-        <p>Aucun burger avec l’ID {{ id }}.</p>
-    {% endif %}
+<div class="row">
+    <div class="col-md-6">
+        <img src="{{ asset('images/burger.jpg') }}" alt="{{ burger.name }}" class="img-fluid rounded shadow">
+    </div>
+    <div class="col-md-6 d-flex flex-column justify-content-center">
+        <h2 class="mb-3">🍔 {{ burger.name }}</h2>
+        <p class="fs-4 text-success fw-bold">{{ burger.price }} €</p>
+        <p class="mb-4">{{ burger.description ?? 'Pas de description disponible.' }}</p>
+        <a href="{{ path('burger_list') }}" class="btn btn-secondary">⬅ Retour à la liste</a>
+    </div>
+</div>
 {% endblock %}

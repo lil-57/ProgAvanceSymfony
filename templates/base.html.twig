@@ -2,15 +2,57 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CRUDcroustillant{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    {{ encore_entry_link_tags('app') }}
+    <style>
+        /* Pollos Hermanos Override Styles */
+        .container-fluid { padding: 0; }
+        .navbar-brand { 
+            font-family: 'Fredoka One', cursive !important;
+            color: #FFD700 !important;
+        }
+        
+        /* Custom Pollos Hermanos enhancements */
+        .pollos-badge {
+            background: linear-gradient(45deg, #FFD700, #FF8C00);
+            color: #2C1810;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .pollos-highlight {
+            background: linear-gradient(135deg, rgba(255,215,0,0.3), rgba(255,140,0,0.3));
+            border-left: 4px solid #DC143C;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        /* Animation pour les éléments hover */
+        .pollos-animation {
+            transition: all 0.3s ease;
+        }
+        
+        .pollos-animation:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+    </style>
 </head>
 <body>
+
     {% include '_header.html.twig' %}
 
-    <main>
+    <main class="container mt-4">
         {% block content %}{% endblock %}
     </main>
 
     {% include '_footer.html.twig' %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
