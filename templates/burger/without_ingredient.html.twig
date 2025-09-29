@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}🚫 Burgers sans {{ ingredient.name }}{% endblock %}
+
+{% block content %}
+<div class="text-center mb-4">
+    <h1>🚫 Burgers sans {{ ingredient.name }}</h1>
+    <p class="text-muted">Recherche de burgers qui ne contiennent pas ce {{ type }}</p>
+    <a href="{{ path('burger_index') }}" class="btn btn-secondary me-2">← Retour aux burgers</a>
+    <a href="{{ path('home') }}" class="btn btn-secondary">← Retour à l'accueil</a>
+</div>
+
+{% if burgers is empty %}
+    <div class="text-center">
+        <div class="alert alert-warning">
+            <h4>😅 Aucun burger trouvé !</h4>
+            <p>Tous les burgers contiennent <strong>{{ ingredient.name }}</strong>.</p>
+            <p><small>Cet ingrédient semble être très populaire !</small></p>
+        </div>
+    </div>
+{% else %}
+    <div class="alert alert-success text-center mb-4">
+        <strong>{{ burgers|length }} burger(s) trouvé(s)</strong> sans {{ ingredient.name }}
+    </div>
+    
+    <div class="row">
+        {% for burger in burgers %}
+            <div class="col-md-4 mb-4">
+                <div class="card pollos-animation">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ burger.name }}</h5>
+                        <p class="card-text">
+                            <span class="pollos-badge">{{ burger.price }}€</span>
+                        </p>
+                        
+                        {% if burger.pain %}
+                            <p><small class="text-muted">Pain: {{ burger.pain.name }}</small></p>
+                        {% endif %}
+                        
+                        {% if burger.oignons is not empty %}
+                            <p><small class="text-muted">
+                                Oignons: 
+                                {% for oignon in burger.oignons %}
+                                    {{ oignon.name }}{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            </small></p>
+                        {% endif %}
+                        
+                        {% if burger.sauces is not empty %}
+                            <p><small class="text-muted">
+                                Sauces: 
+                                {% for sauce in burger.sauces %}
+                                    {{ sauce.name }}{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            </small></p>
+                        {% endif %}
+                        
+                        <div class="mt-3">
+                            <a href="{{ path('burger_show', {id: burger.id}) }}" class="btn btn-primary btn-sm">
+                                Voir détails →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="text-center mt-4">
+    <h5>🔍 Essayer d'autres recherches :</h5>
+    <div class="btn-group" role="group">
+        <a href="{{ path('burger_without_ingredient', {type: 'sauce', name: 'Mayonnaise'}) }}" 
+           class="btn btn-outline-info {% if type == 'sauce' and ingredient.name == 'Mayonnaise' %}active{% endif %}">
+           Sans Mayonnaise
+        </a>
+        <a href="{{ path('burger_without_ingredient', {type: 'sauce', name: 'Ketchup'}) }}" 
+           class="btn btn-outline-info {% if type == 'sauce' and ingredient.name == 'Ketchup' %}active{% endif %}">
+           Sans Ketchup
+        </a>
+        <a href="{{ path('burger_without_ingredient', {type: 'oignon', name: 'Oignon rouge'}) }}" 
+           class="btn btn-outline-info {% if type == 'oignon' and ingredient.name == 'Oignon rouge' %}active{% endif %}">
+           Sans Oignon rouge
+        </a>
+        <a href="{{ path('burger_without_ingredient', {type: 'pain', name: 'Pain brioché'}) }}" 
+           class="btn btn-outline-info {% if type == 'pain' and ingredient.name == 'Pain brioché' %}active{% endif %}">
+           Sans Pain brioché
+        </a>
+    </div>
+</div>
+{% endblock %}

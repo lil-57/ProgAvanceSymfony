@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}🏆 Top {{ limit }} Burgers les Plus Chers{% endblock %}
+
+{% block content %}
+<div class="text-center mb-4">
+    <h1>🏆 Top {{ limit }} Burgers les Plus Chers</h1>
+    <a href="{{ path('burger_index') }}" class="btn btn-secondary me-2">← Retour aux burgers</a>
+    <a href="{{ path('home') }}" class="btn btn-secondary">← Retour à l'accueil</a>
+</div>
+
+{% if topBurgers is empty %}
+    <div class="text-center">
+        <div class="alert alert-info">
+            <p>Aucun burger trouvé dans la base de données.</p>
+        </div>
+    </div>
+{% else %}
+    <div class="alert alert-success text-center mb-4">
+        <strong>{{ topBurgers|length }} burger(s) trouvé(s)</strong> - Classés par prix décroissant
+    </div>
+    
+    <div class="row">
+        {% for burger in topBurgers %}
+            <div class="col-md-4 mb-4">
+                <div class="card pollos-animation position-relative">
+                    <!-- Badge de classement -->
+                    <div class="position-absolute top-0 start-0 m-2">
+                        <span class="badge 
+                            {% if loop.index == 1 %}bg-warning text-dark{% endif %}
+                            {% if loop.index == 2 %}bg-secondary{% endif %}
+                            {% if loop.index == 3 %}bg-danger{% endif %}
+                            {% if loop.index > 3 %}bg-primary{% endif %}
+                        ">
+                            #{{ loop.index }}
+                        </span>
+                    </div>
+                    
+                    <div class="card-body text-center pt-5">
+                        <h5 class="card-title">{{ burger.name }}</h5>
+                        <p class="card-text">
+                            <span class="pollos-badge fs-4 fw-bold">{{ burger.price }}€</span>
+                        </p>
+                        
+                        {% if burger.pain %}
+                            <p><small class="text-muted">Pain: {{ burger.pain.name }}</small></p>
+                        {% endif %}
+                        
+                        {% if burger.oignons is not empty %}
+                            <p><small class="text-muted">
+                                Oignons: 
+                                {% for oignon in burger.oignons %}
+                                    {{ oignon.name }}{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            </small></p>
+                        {% endif %}
+                        
+                        {% if burger.sauces is not empty %}
+                            <p><small class="text-muted">
+                                Sauces: 
+                                {% for sauce in burger.sauces %}
+                                    {{ sauce.name }}{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            </small></p>
+                        {% endif %}
+                        
+                        <div class="mt-3">
+                            <a href="{{ path('burger_show', {id: burger.id}) }}" class="btn btn-primary btn-sm">
+                                Voir détails →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <div class="text-center mt-4">
+        <div class="btn-group" role="group">
+            <a href="{{ path('burger_top', {limit: 3}) }}" class="btn btn-outline-primary {% if limit == 3 %}active{% endif %}">Top 3</a>
+            <a href="{{ path('burger_top', {limit: 5}) }}" class="btn btn-outline-primary {% if limit == 5 %}active{% endif %}">Top 5</a>
+            <a href="{{ path('burger_top', {limit: 10}) }}" class="btn btn-outline-primary {% if limit == 10 %}active{% endif %}">Top 10</a>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

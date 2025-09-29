@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}📊 Burgers avec au moins {{ minIngredients }} ingrédient{% if minIngredients > 1 %}s{% endif %}{% endblock %}
+
+{% block content %}
+<div class="text-center mb-4">
+    <h1>📊 Burgers avec au moins {{ minIngredients }} ingrédient{% if minIngredients > 1 %}s{% endif %}</h1>
+    <p class="text-muted">Recherche de burgers riches en ingrédients (pain + oignons + sauces)</p>
+    <a href="{{ path('burger_index') }}" class="btn btn-secondary me-2">← Retour aux burgers</a>
+    <a href="{{ path('home') }}" class="btn btn-secondary">← Retour à l'accueil</a>
+</div>
+
+{% if burgers is empty %}
+    <div class="text-center">
+        <div class="alert alert-warning">
+            <h4>😔 Aucun burger trouvé !</h4>
+            <p>Aucun burger ne contient au moins <strong>{{ minIngredients }}</strong> ingrédient{% if minIngredients > 1 %}s{% endif %}.</p>
+            <p><small>Essayez avec un nombre plus petit d'ingrédients.</small></p>
+        </div>
+    </div>
+{% else %}
+    <div class="alert alert-success text-center mb-4">
+        <strong>{{ burgers|length }} burger(s) trouvé(s)</strong> avec au moins {{ minIngredients }} ingrédient{% if minIngredients > 1 %}s{% endif %}
+    </div>
+    
+    <div class="row">
+        {% for burger in burgers %}
+            {% set ingredientCount = 0 %}
+            {% if burger.pain %}{% set ingredientCount = ingredientCount + 1 %}{% endif %}
+            {% set ingredientCount = ingredientCount + burger.oignons|length %}
+            {% set ingredientCount = ingredientCount + burger.sauces|length %}
+            
+            <div class="col-md-4 mb-4">
+                <div class="card pollos-animation">
+                    <!-- Badge du nombre d'ingrédients -->
+                    <div class="position-absolute top-0 end-0 m-2">
+                        <span class="badge 
+                            {% if ingredientCount >= 5 %}bg-success{% endif %}
+                            {% if ingredientCount == 4 %}bg-primary{% endif %}
+                            {% if ingredientCount == 3 %}bg-warning text-dark{% endif %}
+                            {% if ingredientCount == 2 %}bg-info{% endif %}
+                            {% if ingredientCount == 1 %}bg-secondary{% endif %}
+                        ">
+                            {{ ingredientCount }} ingrédient{% if ingredientCount > 1 %}s{% endif %}
+                        </span>
+                    </div>
+                    
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ burger.name }}</h5>
+                        <p class="card-text">
+                            <span class="pollos-badge">{{ burger.price }}€</span>
+                        </p>
+                        
+                        <!-- Détail des ingrédients -->
+                        <div class="text-start small">
+                            {% if burger.pain %}
+                                <p class="mb-1">🍞 <strong>Pain:</strong> {{ burger.pain.name }}</p>
+                            {% endif %}
+                            
+                            {% if burger.oignons is not empty %}
+                                <p class="mb-1">🧅 <strong>Oignon{% if burger.oignons|length > 1 %}s{% endif %}:</strong>
+                                    {% for oignon in burger.oignons %}
+                                        {{ oignon.name }}{% if not loop.last %}, {% endif %}
+                                    {% endfor %}
+                                </p>
+                            {% endif %}
+                            
+                            {% if burger.sauces is not empty %}
+                                <p class="mb-1">🥫 <strong>Sauce{% if burger.sauces|length > 1 %}s{% endif %}:</strong>
+                                    {% for sauce in burger.sauces %}
+                                        {{ sauce.name }}{% if not loop.last %}, {% endif %}
+                                    {% endfor %}
+                                </p>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mt-3">
+                            <a href="{{ path('burger_show', {id: burger.id}) }}" class="btn btn-primary btn-sm">
+                                Voir détails →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="text-center mt-4">
+    <h5>🔢 Essayer d'autres recherches :</h5>
+    <div class="btn-group" role="group">
+        <a href="{{ path('burger_minimum_ingredients', {minIngredients: 1}) }}" 
+           class="btn btn-outline-info {% if minIngredients == 1 %}active{% endif %}">
+           ≥ 1 ingrédient
+        </a>
+        <a href="{{ path('burger_minimum_ingredients', {minIngredients: 2}) }}" 
+           class="btn btn-outline-info {% if minIngredients == 2 %}active{% endif %}">
+           ≥ 2 ingrédients
+        </a>
+        <a href="{{ path('burger_minimum_ingredients', {minIngredients: 3}) }}" 
+           class="btn btn-outline-info {% if minIngredients == 3 %}active{% endif %}">
+           ≥ 3 ingrédients
+        </a>
+        <a href="{{ path('burger_minimum_ingredients', {minIngredients: 4}) }}" 
+           class="btn btn-outline-info {% if minIngredients == 4 %}active{% endif %}">
+           ≥ 4 ingrédients
+        </a>
+        <a href="{{ path('burger_minimum_ingredients', {minIngredients: 5}) }}" 
+           class="btn btn-outline-info {% if minIngredients == 5 %}active{% endif %}">
+           ≥ 5 ingrédients
+        </a>
+    </div>
+</div>
+{% endblock %}

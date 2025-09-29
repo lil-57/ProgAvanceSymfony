@@ -49,6 +49,17 @@ public function list(EntityManagerInterface $entityManager): Response
     ]);
 }
 
+#[Route('/burgers/top/{limit}', name: 'burger_top', requirements: ['limit' => '\d+'])]
+public function topBurgers(int $limit, BurgerRepository $burgerRepository): Response
+{
+    $topBurgers = $burgerRepository->findTopXBurgers($limit);
+
+    return $this->render('burger/top.html.twig', [
+        'topBurgers' => $topBurgers,
+        'limit' => $limit,
+    ]);
+}
+
 #[Route('/burgers/{id}', name: 'burger_show')]
 public function show(EntityManagerInterface $entityManager, int $id): Response
 {
@@ -72,6 +83,49 @@ public function findByIngredient(BurgerRepository $burgerRepository, string $nam
     return $this->render('burger/by_ingredient.html.twig', [
         'burgers' => $burgers,
         'ingredient' => $name,
+    ]);
+}
+
+#[Route('/burgers/without/{type}/{name}', name: 'burger_without_ingredient', requirements: ['type' => 'pain|oignon|sauce'])]
+public function findWithoutIngredient(
+    string $type, 
+    string $name, 
+    BurgerRepository $burgerRepository, 
+    EntityManagerInterface $entityManager
+): Response {
+    // Déterminer la classe d'entité selon le type
+    $entityClass = match($type) {
+        'pain' => 'App\Entity\Pain',
+        'oignon' => 'App\Entity\Oignon', 
+        'sauce' => 'App\Entity\Sauce',
+        default => throw new \InvalidArgumentException('Type d\'ingrédient invalide')
+    };
+    
+    // Rechercher l'ingrédient par son nom
+    $ingredient = $entityManager->getRepository($entityClass)->findOneBy(['name' => $name]);
+    
+    if (!$ingredient) {
+        throw $this->createNotFoundException(sprintf('Aucun %s nommé "%s" trouvé', $type, $name));
+    }
+    
+    // Trouver les burgers sans cet ingrédient
+    $burgers = $burgerRepository->findBurgersWithoutIngredient($ingredient);
+    
+    return $this->render('burger/without_ingredient.html.twig', [
+        'burgers' => $burgers,
+        'ingredient' => $ingredient,
+        'type' => $type,
+    ]);
+}
+
+#[Route('/burgers/minimum/{minIngredients}', name: 'burger_minimum_ingredients', requirements: ['minIngredients' => '\d+'])]
+public function findWithMinimumIngredients(int $minIngredients, BurgerRepository $burgerRepository): Response
+{
+    $burgers = $burgerRepository->findBurgersWithMinimumIngredients($minIngredients);
+    
+    return $this->render('burger/minimum_ingredients.html.twig', [
+        'burgers' => $burgers,
+        'minIngredients' => $minIngredients,
     ]);
 }
 
