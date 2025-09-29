@@ -63,4 +63,16 @@ public function show(EntityManagerInterface $entityManager, int $id): Response
     ]);
 }
 
+
+#[Route('/ingredient/{name}', name: 'burger_by_ingredient')]
+public function findByIngredient(BurgerRepository $burgerRepository, string $name): Response
+{
+    $burgers = $burgerRepository->findBurgersWithIngredient($name);
+
+    return $this->render('burger/by_ingredient.html.twig', [
+        'burgers' => $burgers,
+        'ingredient' => $name,
+    ]);
+}
+
 }

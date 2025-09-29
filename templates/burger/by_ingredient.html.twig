@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Burgers avec "{{ ingredient }}" - Los Pollos Burgers{% endblock %}
+
+{% block content %}
+<div class="text-center mb-4">
+    <h1>🔍 Burgers avec "{{ ingredient }}"</h1>
+    <a href="{{ path('burger_index') }}" class="btn btn-secondary">← Retour aux burgers</a>
+</div>
+
+{% if burgers is empty %}
+    <div class="text-center">
+        <div class="pollos-highlight">
+            <h3>🤷‍♂️ Aucun burger trouvé</h3>
+            <p>Désolé, aucun burger ne contient "{{ ingredient }}" dans ses ingrédients.</p>
+            <p><small>Essayez avec: ketchup, pain, oignon, mayonnaise...</small></p>
+        </div>
+    </div>
+{% else %}
+    <div class="text-center mb-4">
+        <div class="pollos-highlight">
+            <h3>🎉 {{ burgers|length }} burger(s) trouvé(s) !</h3>
+            <p>Voici tous les burgers qui contiennent "{{ ingredient }}" :</p>
+        </div>
+    </div>
+    
+    <div class="row">
+        {% for burger in burgers %}
+            <div class="col-md-4 mb-4">
+                <a href="{{ path('burger_show', {id: burger.id}) }}" class="text-decoration-none">
+                    <div class="card pollos-animation">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ burger.name }}</h5>
+                            <p class="card-text">
+                                <span class="pollos-badge">{{ burger.price }}€</span>
+                            </p>
+                            {% if burger.pain %}
+                                <p><small>Pain: {{ burger.pain.name }}</small></p>
+                            {% endif %}
+                            <div class="mt-3">
+                                <span class="btn btn-primary btn-sm">Voir détails →</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="text-center mt-5">
+    <div class="pollos-highlight">
+        <h4>💡 Comment utiliser la recherche ?</h4>
+        <p>Tapez dans l'URL : <code>/ingredient/nom_ingredient</code></p>
+        <p><small>Exemples : /ingredient/ketchup, /ingredient/oignon, /ingredient/pain</small></p>
+    </div>
+</div>
+{% endblock %}

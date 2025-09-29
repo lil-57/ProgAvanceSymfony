@@ -16,53 +16,30 @@ class BurgerRepository extends ServiceEntityRepository
         parent::__construct($registry, Burger::class);
     }
 
-//    /**
-//     * @return Burger[] Returns an array of Burger objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('b.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Burger
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
-
-//    /**
-//     * @return Burger[] Returns an array of Burger objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('b.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Burger
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * Trouve les burgers qui contiennent un ingrédient spécifique
+     * Recherche dans les pains, oignons et sauces
+     *
+     * @param string $ingredientName
+     * @return Burger[]
+     */
+    public function findBurgersWithIngredient(string $ingredientName): array
+    {
+        $qb = $this->createQueryBuilder('b');
+        
+        return $qb
+            ->leftJoin('b.pain', 'p')
+            ->leftJoin('b.oignons', 'o')
+            ->leftJoin('b.sauces', 's')
+            ->where(
+                $qb->expr()->orX(
+                    'LOWER(p.name) LIKE LOWER(:ingredient)',
+                    'LOWER(o.name) LIKE LOWER(:ingredient)',
+                    'LOWER(s.name) LIKE LOWER(:ingredient)'
+                )
+            )
+            ->setParameter('ingredient', '%' . $ingredientName . '%')
+            ->getQuery()
+            ->getResult();
+    }
 }
